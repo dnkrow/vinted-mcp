@@ -133,7 +133,9 @@ class VintedClient:
         return self._request("GET", "/catalog/items", params=params)
 
     def item_details(self, item_id: int) -> dict[str, Any]:
-        return self._request("GET", f"/items/{item_id}")
+        # Confirmed via real Vinted traffic: /items/{id} returns 404,
+        # the actual endpoint is /items/{id}/details (Datadome-protected).
+        return self._request("GET", f"/items/{item_id}/details")
 
     def list_conversations(self, page: int = 1, per_page: int = 25) -> dict[str, Any]:
         return self._request("GET", "/inbox/conversations",
